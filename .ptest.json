@@ -1,0 +1,12 @@
+{
+    "defaultDomain": "domain.pddl",
+    "defaultProblem": "p0.pddl",
+    "defaultOptions": "",
+    "cases": [{
+        "label": "p0",
+        "preProcess": {
+            "kind": "nunjucks",
+            "data": "datafile.json"
+        }
+    }]
+}

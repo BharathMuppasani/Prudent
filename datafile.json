@@ -1,0 +1,28 @@
+{
+    "name": "dialog",
+    "DataBase": [{
+            "name": "DataSource1",
+            "security": {
+                "access": true,
+                "owners": ["john1", "john2"]
+            },
+            "location": "db/data1.csv"
+        },
+        {
+            "name": "DataSource2",
+            "security": {
+                "access": false,
+                "owners": ["sam1", "sam2"]
+            },
+            "location": "db/data2.csv"
+        },
+        {
+            "name": "DataSource3",
+            "security": {
+                "access": false,
+                "owners": ["mary1", "mary2"]
+            },
+            "location": "db/data3.csv"
+        }
+    ]
+}
