@@ -1,9 +1,9 @@
 {
     "defaultDomain": "domain.pddl",
-    "defaultProblem": "p0.pddl",
+    "defaultProblem": "problem_find_query.pddl",
     "defaultOptions": "",
     "cases": [{
-        "label": "p0",
+        "label": "test",
         "preProcess": {
             "kind": "nunjucks",
             "data": "datafile.json"

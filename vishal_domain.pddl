@@ -1,55 +1,66 @@
 (define (domain dialogplan3)
 
-(:requirements :strips :conditional-effects)
+(:requirements :strips :typing :conditional-effects :negative-preconditions)
+(:types
+  database owner input intent
+)
 
-(:predicates 
-    (status-unknown-db-access ?x)
-    (status-unknown-user-query ?x)
-    (status-known-user-query ?x)
-    (status-known-db-access ?x)
+(:predicates
+    (get_user_query ?x)
     (status-have-user-query ?x)
-    (status-have-exact-query ?x)
-    (status-have-partial-query ?x)
-    (is_query_exact ?x)
-    (is_query_partial ?x)
-    (status-display-result ?x)
-    (status-display-code ?x)
+    (get_user_intent ?x)
+    (have_user_intent ?x)
+    (get_db_source ?x)
+    (have_db_source ?x)
+    (have_db_access ?x)
+    (db_admin ?x ?y )
+    (request_db_admin ?x ?y)
 )
 
 (:action GET_USER_QUERY
     :parameters (?x)
-    :precondition (and (status-unknown-user-query ?x))
-    :effect (and (status-known-user-query ?x)
-            (status-unknown-db-access ?x))
+    :precondition (not (status-have-user-query ?x))
+    :effect (and (get_user_query ?x)
+    (status-have-user-query ?x)
+    )
 )
 
+(:action GET_USER_INTENT
+    :parameters (?x ?y)
+    :precondition (and 
+    (status-have-user-query ?x)
+    (not (have_user_intent ?y))
+    )
+    :effect (and (get_user_intent ?x)
+    (have_user_intent ?y)
+    )
+)
+
+(:action GET_DB_SOURCE
+    :parameters (?x)
+    :precondition (and
+    (not (have_db_source ?x))
+    )
+    :effect (and (get_db_source ?x)
+    (have_db_source ?x))
+)
+
+(:action request_admin
+    :parameters (?x ?y)
+    :precondition (and (have_db_source ?x)
+    (db_admin ?x ?y)
+    (not (have_db_access ?x)
+    )
+    )
+    :effect (and (request_db_admin ?x ?y)
+    )
+)
 
 (:action GET_DB_ACCESS
-    :parameters (?x)
-    :precondition (and (status-unknown-db-access ?x))
-    :effect (and (status-known-db-access ?x)
-                (status-have-user-query ?x))
+    :parameters (?x ?y)
+    :precondition (and (request_db_admin ?x ?y))
+    :effect (and (have_db_access ?x))
 )
 
-
-(:action CHECK_QUERY_TYPE
-    :parameters (?x)
-    :precondition (and (status-have-user-query ?x))
-    :effect (and (when (is_query_exact ?x) (status-have-exact-query ?x))
-                (when (is_query_partial ?x) (status-have-partial-query ?x))
-    )
-)
-
-(:action DISPLAY_EXACT_MATCH_RESULTS
-    :parameters (?x)
-    :precondition (and (status-have-exact-query ?x))
-    :effect (and (status-display-result ?x))
-)
-
-(:action PERFORM_PARTIAL_MATCH_DISAMBIGUATION
-    :parameters (?x)
-    :precondition (and (status-have-partial-query ?x))
-    :effect (and (status-have-user-query ?x)
-    )
-)
+ 
 )

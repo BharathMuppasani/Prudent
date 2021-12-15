@@ -1,28 +1,16 @@
 {
     "name": "dialog",
+    "user_query": "find-phone-number-of-Vishal",
+    "DB_present": true,
+    "if_not_present": "Not_Present",
     "DataBase": [{
-            "name": "DataSource1",
-            "security": {
-                "access": true,
-                "owners": ["john1", "john2"]
-            },
-            "location": "db/data1.csv"
+        "name": "PhoneBook",
+        "security": {
+            "access": false,
+            "owners": ["john", "sam"]
         },
-        {
-            "name": "DataSource2",
-            "security": {
-                "access": false,
-                "owners": ["sam1", "sam2"]
-            },
-            "location": "db/data2.csv"
-        },
-        {
-            "name": "DataSource3",
-            "security": {
-                "access": false,
-                "owners": ["mary1", "mary2"]
-            },
-            "location": "db/data3.csv"
-        }
-    ]
+        "location": "db-data1",
+        "type": "csv",
+        "content": ["numbers", "person_name"]
+    }]
 }
