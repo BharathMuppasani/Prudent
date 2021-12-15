@@ -1,16 +1,16 @@
 {
     "name": "dialog",
-    "user_query": "find-phone-number-of-Vishal",
+    "user_query": "USER_QUERY",
     "DB_present": true,
     "if_not_present": "Not_Present",
     "DataBase": [{
-        "name": "PhoneBook",
+        "name": "DATA_SOURCE",
         "security": {
             "access": false,
-            "owners": ["john", "sam"]
+            "owners": ["DB_ADMIN"]
         },
         "location": "db-data1",
         "type": "csv",
-        "content": ["numbers", "person_name"]
+        "content": ["COLUMN_1", "COLUMN_2"]
     }]
 }

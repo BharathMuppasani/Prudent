@@ -15,8 +15,8 @@
   (request_access ?x)
   (db_owner ?x ?y)
   (request_owner_db ?x ?y)
-  (get_col_metadata ?x ?y)
-  (user_intent ?x ?y)
+  (get_col_metadata ?x)
+  (role_labelled ?x ?y)
   (display ?y)
 )
 
@@ -74,14 +74,25 @@
     :precondition (and 
     (can_access ?x)
     (open ?x))
-    :effect (and (get_col_metadata ?x ?y))
+    :effect (and (get_col_metadata ?y))
 )
+
+(:action semantic_role_labelling
+    :parameters (?x ?y)
+    :precondition (and 
+    (get_col_metadata ?y)
+    (have_user_intent ?x)
+    )
+    :effect (and (role_labelled ?x ?y))
+)
+
 
 (:action match_results_from_user_intent
     :parameters (?x ?y)
     :precondition (and 
-    (get_col_metadata ?x ?y)
-    (user_intent ?x ?y)
+    (get_col_metadata ?y)
+    (have_user_intent ?x)
+    (role_labelled ?x ?y)
     )
     :effect (and (display ?y))
 )

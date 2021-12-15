@@ -19,7 +19,6 @@
 {% if data.DB_present %}
     {% for data in data.DataBase %}
         (have_db_source {{data.name}})
-        (user_intent {{data.name}} {{data.content[0]}})
         {% if data.security.access %}
             (can_access {{data.name}})
         {% endif %}
@@ -42,12 +41,13 @@
 (:goal (and
 {% if data.DB_present %}
     (get_user_intent {{data.user_query}})
-    {% for data in data.DataBase %}
-        (open {{data.name}})
-        {% for col in data.content %}
-            (get_col_metadata {{data.name}} {{col}})
+    {% for db in data.DataBase %}
+        (open {{db.name}})
+        {% for col in db.content %}
+            (get_col_metadata {{col}})
+            (role_labelled {{data.user_query}} {{col}})
         {% endfor %}
-        (display {{data.content[0]}})
+        (display {{db.content[0]}})
     {% endfor %}
 {% else %}(no_db_source {{data.if_not_present}})
 {% endif %}
